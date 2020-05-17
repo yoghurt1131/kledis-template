@@ -1,0 +1,4 @@
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+dev.yoghurt1131.kledistemplate.core.config.KLedisConfiguration
+
