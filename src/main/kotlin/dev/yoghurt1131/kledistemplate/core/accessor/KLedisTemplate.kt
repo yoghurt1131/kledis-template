@@ -22,6 +22,10 @@ class KLedisTemplate<V> : RedisTemplate<String, V> {
         afterPropertiesSet()
     }
 
+    /**
+     * read value from Redis if the key exists.
+     * return null if not exists, or catch some exceptions.
+     */
     fun read(key: String): V? {
         try {
             val value: V? = this.opsForValue().get(key)
@@ -37,6 +41,10 @@ class KLedisTemplate<V> : RedisTemplate<String, V> {
         }
     }
 
+    /**
+     * write value into Redis.
+     * No exceptions are thrown from this method.
+     */
     fun write(key: String, value: V, timeout: Long, unit: TimeUnit) {
         try {
             opsForValue().set(key, value)
