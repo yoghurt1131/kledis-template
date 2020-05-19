@@ -56,10 +56,13 @@ compileKotlin {
 	}
 }
 
+def repo = new File(rootDir, "repository")
 uploadArchives {
 	repositories {
 		mavenDeployer {
-			repository(url: "file:${System.getProperty('user.home')}/.m2/repository")
+			repository url: "file://${repo.absolutePath}"
+			pom.version = version
+			pom.groupId = group
+			pom.artifactId = rootProject.name
 		}
-	}
-}
+}}
