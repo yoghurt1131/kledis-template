@@ -1,6 +1,7 @@
 plugins {
 	id 'java'
 	id 'maven'
+	id 'maven-publish'
 	id 'org.springframework.boot'  version '2.2.7.RELEASE'
 	id 'io.spring.dependency-management'  version '1.0.9.RELEASE'
 	id 'org.jetbrains.kotlin.jvm' version '1.3.72'
@@ -56,13 +57,21 @@ compileKotlin {
 	}
 }
 
-def repo = new File(rootDir, "repository")
-uploadArchives {
+
+publishing {
 	repositories {
-		mavenDeployer {
-			repository url: "file://${repo.absolutePath}"
-			pom.version = version
-			pom.groupId = group
-			pom.artifactId = rootProject.name
+		maven {
+			name = "GitHubPackages"
+			url = uri("https://maven.pkg.github.com/yoghurt1131/kledis-teplate")
+			credentials {
+				username = System.getenv("GITHUB_ACTOR")
+				password = System.getenv("GITHUB_TOKEN")
+			}
 		}
-}}
+	}
+	publications {
+		gpr(MavenPublication) {
+			from(components.java)
+		}
+	}
+}
